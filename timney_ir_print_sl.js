@@ -147,7 +147,7 @@ define(['N/render', 'N/search', 'N/file', 'N/runtime'], (render, search, file, r
 // </pdf>`;
 
 
-          const xmlTemplate = `<?xml version="1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+      const xmlTemplate = `<?xml version="1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
 <pdf>
 <head>
     <style type="text/css">
@@ -172,26 +172,33 @@ define(['N/render', 'N/search', 'N/file', 'N/runtime'], (render, search, file, r
 
         .header-table {
             width: 100%;
+            height: 0.38in;
             border-bottom: 1px solid black;
         }
 
         .item-section {
             width: 100%;
+            height: 0.62in;
             border-bottom: 1px solid black;
         }
 
         .details-table {
             width: 100%;
+            height: 0.78in;
             border-bottom: 1px solid black;
         }
 
-        .label-padding {
-            padding-left: 8px;
-            padding-right: 8px;
+        .barcode-table {
+            width: 100%;
+            height: 1.15in;
         }
 
-        .bold {
-            font-weight: bold;
+        .pad-left {
+            padding-left: 6px;
+        }
+
+        .pad-right {
+            padding-right: 6px;
         }
     </style>
 </head>
@@ -203,79 +210,80 @@ define(['N/render', 'N/search', 'N/file', 'N/runtime'], (render, search, file, r
         <tr>
             <td class="wrapper-cell">
 
-                <!-- Header -->
+                <!-- HEADER -->
                 <table class="header-table" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td class="label-padding" style="font-size: 15pt; font-weight: bold; padding-top: 8px; padding-bottom: 7px;">
+                        <td width="65%" class="pad-left" style="font-size: 13pt; font-weight: bold; vertical-align: middle;">
                             IR - \${record.tranid}
                         </td>
-                        <td class="label-padding" align="right" style="font-size: 10pt; font-weight: bold; padding-top: 10px; padding-bottom: 7px;">
+                        <td width="35%" class="pad-right" align="right" style="font-size: 9pt; font-weight: bold; vertical-align: middle;">
                             \${record.trandate}
                         </td>
                     </tr>
                 </table>
 
-                <!-- Item Section -->
+                <!-- ITEM SECTION -->
                 <table class="item-section" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td style="width: 30px; padding-left: 8px; padding-top: 5px; vertical-align: top;">
-                            <span style="font-size: 8pt; font-weight: bold; line-height: 9pt;">
-                                I<br/>T<br/>E<br/>M<br/>:
-                            </span>
+                        <td width="22" class="pad-left" style="vertical-align: top; padding-top: 2px;">
+                            <table cellpadding="0" cellspacing="0">
+                                <tr><td style="font-size: 6pt; font-weight: bold;">I</td></tr>
+                                <tr><td style="font-size: 6pt; font-weight: bold;">T</td></tr>
+                                <tr><td style="font-size: 6pt; font-weight: bold;">E</td></tr>
+                                <tr><td style="font-size: 6pt; font-weight: bold;">M</td></tr>
+                                <tr><td style="font-size: 6pt; font-weight: bold;">:</td></tr>
+                            </table>
                         </td>
 
-                        <td style="padding-top: 5px; padding-bottom: 7px; vertical-align: top;">
-                            <span style="font-size: 18pt; font-weight: bold;">
+                        <td style="vertical-align: top; padding-top: 2px;">
+                            <span style="font-size: 16pt; font-weight: bold;">
                                 \${item.item}
                             </span>
                             <br/>
-                            <span style="font-size: 8pt; font-weight: bold;">
+                            <span style="font-size: 7pt; font-weight: bold;">
                                 \${item.description}
                             </span>
                         </td>
                     </tr>
                 </table>
 
-                <!-- Details Section -->
+                <!-- DETAILS SECTION -->
                 <table class="details-table" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td class="label-padding" style="width: 33%; font-size: 10pt; padding-top: 6px;">
-                            <b>QTY:</b>&nbsp;&nbsp;\${item.quantity}
+                        <td width="22%" class="pad-left" style="font-size: 8pt; padding-top: 3px;">
+                            <b>QTY:</b>&nbsp; \${item.quantity}
                         </td>
-                        <td style="width: 33%; font-size: 10pt; padding-top: 6px;">
-                            <b>UOM:</b>&nbsp;&nbsp;\${item.uom}
+                        <td width="36%" style="font-size: 8pt; padding-top: 3px;">
+                            <b>UOM:</b>&nbsp; \${item.uom}
                         </td>
-                        <td style="width: 34%; font-size: 10pt; padding-top: 6px;">
-                            <b>RATE:</b>&nbsp;&nbsp;\${item.rate}
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="3" class="label-padding" style="font-size: 10pt; padding-top: 8px;">
-                            <b>LOC:</b>&nbsp;&nbsp;\${item.location}
+                        <td width="42%" style="font-size: 8pt; padding-top: 3px;">
+                            <b>RATE:</b>&nbsp; \${item.rate}
                         </td>
                     </tr>
 
                     <tr>
-                        <td colspan="2" class="label-padding" style="font-size: 10pt; padding-top: 8px; padding-bottom: 8px;">
-                            <b>BIN:</b>&nbsp;&nbsp;\${item.binNumber}
+                        <td colspan="3" class="pad-left" style="font-size: 8pt; padding-top: 4px;">
+                            <b>LOC:</b>&nbsp; \${item.location}
                         </td>
-                        <td style="font-size: 10pt; padding-top: 8px; padding-bottom: 8px;">
-                            <b>WO:</b>&nbsp;&nbsp;\${item.woNumber}
+                    </tr>
+
+                    <tr>
+                        <td width="45%" class="pad-left" style="font-size: 8pt; padding-top: 4px;">
+                            <b>BIN:</b>&nbsp; \${item.binNumber}
+                        </td>
+                        <td width="55%" colspan="2" style="font-size: 8pt; padding-top: 4px;">
+                            <b>WO:</b>&nbsp; \${item.woNumber}
                         </td>
                     </tr>
                 </table>
 
-                <!-- Barcode Section -->
-                <table style="width: 100%;" cellpadding="0" cellspacing="0">
+                <!-- BARCODE SECTION -->
+                <table class="barcode-table" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td align="center" style="padding-top: 13px;">
-                            <barcode codetype="code128" showtext="false" value="\${item.item}" width="2.55in" height="0.38in"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" style="font-size: 8pt; padding-top: 2px;">
-                            \${item.item}
+                        <td align="center" style="vertical-align: top; padding-top: 0.22in;">
+                            <barcode codetype="code128" showtext="false" value="\${item.item}" width="1.9in" height="0.35in"/>
+                            <br/>
+                            <span style="font-size: 7pt;">\${item.item}</span>
                         </td>
                     </tr>
                 </table>
